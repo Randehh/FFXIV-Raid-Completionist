@@ -3,6 +3,7 @@ import { useParams } from "react-router-dom";
 
 import RaidChecklist from './RaidSchedules/RaidChecklist';
 import Raider from './RaiderData/Raider';
+import SheetsAPI from './SheetsAPI/SheetsAPI';
 
 class RaidTier {
     constructor(name, raidDefs, hardPrefix, printNames, hideHardMode) {
@@ -23,6 +24,10 @@ class RaidDefinition {
 }
 
 const TeamPage = () => {
+let api = new SheetsAPI();
+api.getValue("TeamNames", "A1");
+api.setValue("TeamNames", "A1", "lol");
+
     const { teamId } = useParams();
     let testingRaiders = [
         new Raider("Elin"),
