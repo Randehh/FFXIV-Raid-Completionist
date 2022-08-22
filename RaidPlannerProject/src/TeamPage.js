@@ -24,9 +24,12 @@ class RaidDefinition {
 }
 
 const TeamPage = () => {
-let api = new SheetsAPI();
-api.getValue("TeamNames", "A1");
-api.setValue("TeamNames", "A1", "lol");
+    let api = new SheetsAPI();
+    api.init(() => {
+        //api.getValues("TeamNames", null, true);
+        ///api.setValues("TeamNames", "A1", "kjdfgskjdsfkjsjffsljkljklsfdklfds");
+        //api.appendValues(null, "A1:B1", ["Test team", "UUID"]);
+    });
 
     const { teamId } = useParams();
     let testingRaiders = [
