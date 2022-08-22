@@ -1,31 +1,31 @@
-import './CreateTeamModel.css';
+import './TeamDisplay.css';
 
 import React, { useState } from 'react';
-import {useNavigate} from 'react-router-dom';
 
 import Modal from 'react-bootstrap/Modal';
 import Button from 'react-bootstrap/Button';
 
-import { appendValues } from './SheetsAPI/SheetsAPI'
-import { generateUUID } from './Utils/UUID'
 
-function CreateTeamModal() {
+function TeamDisplay(props) {
+
     const [isWorking, setIsWorking] = useState(false);
 
-    const navigate = useNavigate();
     const [show, setShow] = useState(false);
 
-    const handleClose = () => setShow(false);
+    const handleClose = () => {
+        setShow(false);
+    }
+
     const handleConfirm = () => {
         setIsWorking(true);
-
-        let id = generateUUID();
-        appendValues(null, "A1:C1", [id, teamName, teamMembers], () =>{
-            navigate("/FFXIV-Raid-Completionist/Team/" + id, {replace: true});
+        props.props.onConfirm(teamName, teamMembers, () =>{
             setShow(false);
         });
     }
-    const handleShow = () => setShow(true);
+    const handleShow = () => {
+        setIsWorking(false);
+        setShow(true);
+    }
 
     const [teamName, setTeamName] = React.useState({});
     const [teamMembers, setTeamMembers] = React.useState({});
@@ -33,7 +33,7 @@ function CreateTeamModal() {
     return (
         <>
             <Button variant="primary" onClick={handleShow}>
-                Create team
+                {props.props.buttonText}
             </Button>
             <Modal
                 show={show}
@@ -42,7 +42,7 @@ function CreateTeamModal() {
                 backdrop="static"
                 keyboard={false}>
                 <Modal.Header closeButton>
-                    <Modal.Title>Create new team</Modal.Title>
+                    <Modal.Title>{props.props.title}</Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
                     <div className='content'>
@@ -61,11 +61,11 @@ function CreateTeamModal() {
                         Close
                     </Button>
                     <Button variant="primary" disabled={isWorking} onClick={handleConfirm}>
-                        Create
+                        {props.props.confirmText}
                     </Button>
                 </Modal.Footer>
             </Modal>
         </>);
 }
 
-export default CreateTeamModal;
+export default TeamDisplay;

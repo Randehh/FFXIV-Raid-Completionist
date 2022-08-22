@@ -53,16 +53,19 @@ export function initSheets(onReady) {
     XHR.send(urlEncodedData);
 }
 
-export async function getValues(sheetId, cells, getByColumn) {
+export async function getValues(sheetId, cells, getByColumn, onCompleted) {
     let cellNotation = getCellNotation(sheetId, cells);
     let requestUrl = appendHeaders(GetValuesUrl(SHEET_ID, cellNotation), false, false, getByColumn);
 
     let response = await fetch(requestUrl);
-    let myJson = await response.json(); //extract JSON from the http response
-    console.log(myJson);
+
+    if(onCompleted) {
+        let jsonResponse = await response.json();
+        onCompleted(jsonResponse);
+    }
 }
 
-export async function setValues(sheetId, cells, value) {
+export async function setValues(sheetId, cells, value, onCompleted) {
     let cellNotation = getCellNotation(sheetId, cells);
     let requestUrl = appendHeaders(PutValuesUrl(SHEET_ID, cellNotation), true, false, false);
 
@@ -73,19 +76,28 @@ export async function setValues(sheetId, cells, value) {
             ]
         ]
     }
-    await fetch(requestUrl, buildPostRequest(jsonData));
+    let response = await fetch(requestUrl, buildPostRequest(jsonData));
+
+    if(onCompleted) {
+        let jsonResponse = await response.json();
+        onCompleted(jsonResponse);
+    }
 }
 
-export async function appendValues(sheetId, cells, values, onCompleted) {
+export async function appendValues(sheetId, cells, values, horizontal, onCompleted) {
     let cellNotation = getCellNotation(sheetId, cells);
-    let requestUrl = appendHeaders(AppendValuesUrl(SHEET_ID, cellNotation), true, true, false);
+    let requestUrl = appendHeaders(AppendValuesUrl(SHEET_ID, cellNotation), true, horizontal, false);
+    requestUrl += "&includeValuesInResponse=true";
 
     let jsonData = {
-
         "values": [values]
     }
-    await fetch(requestUrl, buildPostRequest(jsonData));
-    if(onCompleted) { onCompleted(); }
+    let response = await fetch(requestUrl, buildPostRequest(jsonData));
+
+    if(onCompleted) {
+        let jsonResponse = await response.json();
+        onCompleted(jsonResponse);
+    }
 }
 
 function buildPostRequest(jsonData) {

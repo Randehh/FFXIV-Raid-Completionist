@@ -1,14 +1,20 @@
 import './NavBar.css';
 
 import React from 'react';
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 import Button from 'react-bootstrap/Button';
 
-import CreateTeamModal from './CreateTeamModal';
+import TeamDisplay from './TeamComponents/TeamDisplay';
+
+import { appendValues } from './SheetsAPI/SheetsAPI'
+import { generateUUID } from './Utils/UUID'
 
 const NavBar = () => {
+    const navigate = useNavigate();
+
     const [input, setTeam] = React.useState({});
+
     return (
         <>
         <div className='nav-bar'>
@@ -24,7 +30,23 @@ const NavBar = () => {
                 </Link>
             </div>
 
-            <CreateTeamModal/>
+            <TeamDisplay props={{
+                title: "Create new team",
+                buttonText:"Create team",
+                confirmText: "Create",
+                onConfirm: (teamName, teamMembers, callback) => {
+                    let id = generateUUID();
+                    let bodyData = [id, teamName, teamMembers];
+                    teamMembers.split('\n').forEach(memberName => {
+                        bodyData.push(memberName+"=");
+                    });
+                    appendValues(null, "A1:C1", bodyData, false, (response) =>{
+                        console.log(response);
+                        navigate("/FFXIV-Raid-Completionist/Team/" + id, {replace: true});
+                    });
+                    callback();
+                }
+            }}/>
         </div>
         
         </>

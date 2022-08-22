@@ -1,0 +1,16 @@
+.checkbox-container {
+    display: flex;
+    justify-content: space-around;
+}
+
+.raid-row {
+    height: 25px;
+}
+
+.raid-row:nth-child(odd) {
+    background: #b8b8b880;
+}
+
+.raid-column:nth-child(odd){
+    background: #b8b8b880;
+}
