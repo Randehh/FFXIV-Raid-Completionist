@@ -37,7 +37,7 @@ class RaidTier extends React.Component {
                                 </th>
                             }))}
                         </tr>
-                        <RaidTierRow tier={this.props.tier} raiders={this.props.raiders} />
+                        <RaidTierRow props={this.props} />
                     </tbody>
                 </table>
             </div>

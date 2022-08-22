@@ -1,8 +1,19 @@
-import React from 'react';
+import React, { useEffect } from "react";
 import { useParams } from "react-router-dom";
+import Modal from 'react-bootstrap/Modal';
 
 import RaidChecklist from './RaidSchedules/RaidChecklist';
 import Raider from './RaiderData/Raider';
+import { RaidNames } from './RaidConstants'
+
+import { getValues } from './SheetsAPI/SheetsAPI'
+
+class RaidSet {
+    constructor(tiers, identifier){
+        this.tiers = tiers;
+        this.identifier = identifier;
+    }
+}
 
 class RaidTier {
     constructor(name, raidDefs, hardPrefix, printNames, hideHardMode) {
@@ -24,13 +35,27 @@ class RaidDefinition {
 
 const TeamPage = () => {
     const { teamId } = useParams();
-    let testingRaiders = [
-        new Raider("Elin"),
-        new Raider("K'ristel"),
-        new Raider("Gerben"),
-        new Raider("Reddunca"),
-        new Raider("Aminiryuku"),
-    ];
+
+    const [teamName, setTeamName] = React.useState("Loading...");
+    const [raiders, setRaiders] = React.useState([]);
+    const [isLoading, setIsLoading] = React.useState(true);
+
+    useEffect(() => {
+        getValues("Teams", null, true, (results) =>{
+            console.log(results);
+            let index = results["values"][0].indexOf(teamId);
+            console.log(`index = ${index}`);
+            setTeamName(results["values"][1][index]);
+    
+            let tmpRaiders = [];
+            results["values"][2][index].split('\n').forEach(raiderName => {
+                let raider = new Raider(raiderName);
+                tmpRaiders.push(raider);
+            });
+            setRaiders(tmpRaiders);
+
+            setIsLoading(false);
+    })}, ["teamId"]);
 
     let arrRaids = BuildArrRaids();
     let heavenswardRaids = BuildHeavenswardRaids();
@@ -40,54 +65,20 @@ const TeamPage = () => {
 
     return (
         <div>
-            <RaidChecklist tierName="A Realm Reborn" tiers={arrRaids} raiders={testingRaiders}></RaidChecklist>
-            <RaidChecklist tierName="Heavensward" tiers={heavenswardRaids} raiders={testingRaiders}></RaidChecklist>
-            <RaidChecklist tierName="Stormblood" tiers={stormbloodRaids} raiders={testingRaiders}></RaidChecklist>
-            <RaidChecklist tierName="Shadowbringers" tiers={shadowbringerRaids} raiders={testingRaiders}></RaidChecklist>
-            <RaidChecklist tierName="Endwalker" tiers={endwalkerRaids} raiders={testingRaiders}></RaidChecklist>
+            <Modal show={isLoading}
+                centered
+                backdrop="static"
+                keyboard={false}>
+                <Modal.Body>Loading...</Modal.Body>
+            </Modal>
+            <h1>{teamName}</h1>
+            <RaidChecklist tierName={RaidNames[0]} raidSet={arrRaids} raiders={raiders}></RaidChecklist>
+            <RaidChecklist tierName={RaidNames[1]} raidSet={heavenswardRaids} raiders={raiders}></RaidChecklist>
+            <RaidChecklist tierName={RaidNames[2]} raidSet={stormbloodRaids} raiders={raiders}></RaidChecklist>
+            <RaidChecklist tierName={RaidNames[3]} raidSet={shadowbringerRaids} raiders={raiders}></RaidChecklist>
+            <RaidChecklist tierName={RaidNames[4]} raidSet={endwalkerRaids} raiders={raiders}></RaidChecklist>
         </div>
     );
-}
-
-function BuildHeavenswardRaids() {
-    let tier1Raids = [
-        new RaidDefinition("A1S", "Fist of the Father"),
-        new RaidDefinition("A2S", "Cuff of the Father"),
-        new RaidDefinition("A3S", "Arm of the Father"),
-        new RaidDefinition("A4S", "Burden of the Father"),
-    ];
-
-    let tier2Raids = [
-        new RaidDefinition("A5S", "Fist of the Son"),
-        new RaidDefinition("A6S", "Cuff of the Son"),
-        new RaidDefinition("A7S", "Arm of the Son"),
-        new RaidDefinition("A8S", "Burden of the Son"),
-    ];
-
-    let tier3Raids = [
-        new RaidDefinition("A9S", "Eyes of the Creator"),
-        new RaidDefinition("A10S", "Breath of the Creator"),
-        new RaidDefinition("A11S", "Heart of the Creator"),
-        new RaidDefinition("A12S", "Soul of the Creator"),
-    ];
-
-    let trials = [
-        new RaidDefinition("Thok ast Thok", "Ravana", "TaT"),
-        new RaidDefinition("The Limitless Blue", "Bismarck", "Bi"),
-        new RaidDefinition("The Singularity Reactor", "King Thordan", "KT"),
-        new RaidDefinition("The Final Steps of Faith", "Nidhogg", "FSoF"),
-        new RaidDefinition("Containment Bay S1T7", "Sephirot", "CBS1"),
-        new RaidDefinition("Containment Bay P1T6", "Sophia", "CBP1"),
-        new RaidDefinition("Containment Bay Z1T9", "Zurvan", "CBZ1"),
-    ]
-
-    let tiers = [
-        new RaidTier("GORDIAS", tier1Raids, "Savage", true),
-        new RaidTier("MIDAS", tier2Raids, "Savage", false),
-        new RaidTier("THE CREATOR", tier3Raids, "Savage", false),
-        new RaidTier("TRIALS", trials, "Extreme", false),
-    ];
-    return tiers;
 }
 
 function BuildArrRaids() {
@@ -130,7 +121,49 @@ function BuildArrRaids() {
         new RaidTier("THE FINAL COIL", tier3Raids, "Savage", false, true),
         new RaidTier("TRIALS", trials, "Extreme", false),
     ];
-    return tiers;
+    
+    return new RaidSet(tiers, RaidNames[0]);
+}
+
+function BuildHeavenswardRaids() {
+    let tier1Raids = [
+        new RaidDefinition("A1S", "Fist of the Father"),
+        new RaidDefinition("A2S", "Cuff of the Father"),
+        new RaidDefinition("A3S", "Arm of the Father"),
+        new RaidDefinition("A4S", "Burden of the Father"),
+    ];
+
+    let tier2Raids = [
+        new RaidDefinition("A5S", "Fist of the Son"),
+        new RaidDefinition("A6S", "Cuff of the Son"),
+        new RaidDefinition("A7S", "Arm of the Son"),
+        new RaidDefinition("A8S", "Burden of the Son"),
+    ];
+
+    let tier3Raids = [
+        new RaidDefinition("A9S", "Eyes of the Creator"),
+        new RaidDefinition("A10S", "Breath of the Creator"),
+        new RaidDefinition("A11S", "Heart of the Creator"),
+        new RaidDefinition("A12S", "Soul of the Creator"),
+    ];
+
+    let trials = [
+        new RaidDefinition("Thok ast Thok", "Ravana", "TaT"),
+        new RaidDefinition("The Limitless Blue", "Bismarck", "Bi"),
+        new RaidDefinition("The Singularity Reactor", "King Thordan", "KT"),
+        new RaidDefinition("The Final Steps of Faith", "Nidhogg", "FSoF"),
+        new RaidDefinition("Containment Bay S1T7", "Sephirot", "CBS1"),
+        new RaidDefinition("Containment Bay P1T6", "Sophia", "CBP1"),
+        new RaidDefinition("Containment Bay Z1T9", "Zurvan", "CBZ1"),
+    ]
+
+    let tiers = [
+        new RaidTier("GORDIAS", tier1Raids, "Savage", true),
+        new RaidTier("MIDAS", tier2Raids, "Savage", false),
+        new RaidTier("THE CREATOR", tier3Raids, "Savage", false),
+        new RaidTier("TRIALS", trials, "Extreme", false),
+    ];
+    return new RaidSet(tiers, RaidNames[1]);
 }
 
 function BuildStormbloodRaids() {
@@ -172,7 +205,8 @@ function BuildStormbloodRaids() {
         new RaidTier("ALPHASCAPE", tier3Raids, "Savage", false),
         new RaidTier("TRIALS", trials, "Extreme", false),
     ];
-    return tiers;
+
+    return new RaidSet(tiers, RaidNames[2]);
 }
 
 function BuildShadowbringersRaids() {
@@ -213,7 +247,7 @@ function BuildShadowbringersRaids() {
         new RaidTier("EDEN'S PROMISE", tier3Raids, "Savage", false),
         new RaidTier("TRIALS", trials, "Extreme", false),
     ];
-    return tiers;
+    return new RaidSet(tiers, RaidNames[3]);
 }
 
 function BuildEndwalkerRaids() {
@@ -234,7 +268,7 @@ function BuildEndwalkerRaids() {
         new RaidTier("ASPHODELOS", tier1Raids, "Savage", true),
         new RaidTier("TRIALS", trials, "Extreme", false),
     ];
-    return tiers;
+    return new RaidSet(tiers, RaidNames[4]);
 }
 
 export default TeamPage;
