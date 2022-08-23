@@ -24,7 +24,7 @@ const RaidTierRow = ({ props }) => {
 
 const TickBoxSet = ({ tier, raid, raider }) => {
     let normalModeState = raider.getRaidCompleted(raid.acronym);
-    let hardModeState = raider.getRaidCompleted("#" + raid.acronymHard);
+    let hardModeState = raider.getRaidCompleted(raid.acronymHard);
 
     const [isNormalCompleted, setIsNormalCompleted] = React.useState(normalModeState);
     const [isHardCompleted, setIsHardCompleted] = React.useState(hardModeState);

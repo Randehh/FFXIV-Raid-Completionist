@@ -38,7 +38,7 @@ class RaidDefinition {
         this.name = name;
         this.subtitle = subtitle;
         this.acronym = acronym != null ? acronym : name;
-        this.acronymHard = "#" + acronym;
+        this.acronymHard = "#" + this.acronym;
     }
 }
 
