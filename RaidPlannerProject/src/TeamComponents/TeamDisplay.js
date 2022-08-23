@@ -22,6 +22,7 @@ function TeamDisplay(props) {
             setShow(false);
         });
     }
+    
     const handleShow = () => {
         setIsWorking(false);
         setShow(true);

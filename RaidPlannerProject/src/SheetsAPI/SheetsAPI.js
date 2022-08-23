@@ -76,7 +76,7 @@ export async function setValues(sheetId, cells, value, onCompleted) {
             ]
         ]
     }
-    let response = await fetch(requestUrl, buildPostRequest(jsonData));
+    let response = await fetch(requestUrl, buildPostRequest(jsonData, 'PUT'));
 
     if(onCompleted) {
         let jsonResponse = await response.json();
@@ -92,7 +92,7 @@ export async function appendValues(sheetId, cells, values, horizontal, onComplet
     let jsonData = {
         "values": [values]
     }
-    let response = await fetch(requestUrl, buildPostRequest(jsonData));
+    let response = await fetch(requestUrl, buildPostRequest(jsonData, 'POST'));
 
     if(onCompleted) {
         let jsonResponse = await response.json();
@@ -100,9 +100,9 @@ export async function appendValues(sheetId, cells, values, horizontal, onComplet
     }
 }
 
-function buildPostRequest(jsonData) {
+function buildPostRequest(jsonData, method) {
     return {
-        method: 'POST',
+        method: method,
         headers: {
             'Accept': 'application/json',
             'Content-Type': 'application/json',

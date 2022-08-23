@@ -2,9 +2,7 @@ import './RaidTierRow.css'
 
 import React from 'react';
 
-const RaidTierRow = ({props}) => {
-    const [isNormalCompleted, setIsNormalCompleted] = React.useState(true);
-    const [isHardCompleted, setIsHardCompleted] = React.useState(true);
+const RaidTierRow = ({ props }) => {
 
     return (
         <>
@@ -15,20 +13,40 @@ const RaidTierRow = ({props}) => {
                     }
 
                     {React.Children.toArray(props.tier.raidDefs.map((raid, index) => {
-                        return <td className='raid-column'>
-                            <div className='checkbox-container'>
-                                <input type="checkbox" value={isNormalCompleted} onChange={event => setIsNormalCompleted(event.target.value)}/>
-                                {!props.tier.hideHardMode &&
-                                    <input type="checkbox" value={isHardCompleted} onChange={event => setIsHardCompleted(event.target.value)} />
-                                }
-                            </div>
-                        </td>
+                        return <TickBoxSet tier={props.tier} raid={raid} raider={raider}/>
                     }))}
                 </tr>
 
             }))}
         </>
     );
+}
+
+const TickBoxSet = ({ tier, raid, raider }) => {
+    let normalModeState = raider.getRaidCompleted(raid.acronym);
+    let hardModeState = raider.getRaidCompleted("#" + raid.acronym);
+
+    const [isNormalCompleted, setIsNormalCompleted] = React.useState(normalModeState);
+    const [isHardCompleted, setIsHardCompleted] = React.useState(hardModeState);
+
+    const onToggleNormalCheckbox = (raid, raider, value) => {
+        setIsNormalCompleted(value);
+        raider.setRaidCompleted(raid.acronym, value);
+    }
+
+    const onToggleHardCheckbox = (raid, raider, value) => {
+        setIsHardCompleted(value);
+        raider.setRaidCompleted("#" + raid.acronym, value);
+    }
+
+    return (<td className='raid-column'>
+        <div className='checkbox-container'>
+            <input type="checkbox" checked={isNormalCompleted} onChange={event => onToggleNormalCheckbox(raid, raider, event.target.checked)} />
+            {!tier.hideHardMode &&
+                <input type="checkbox" checked={isHardCompleted} onChange={event => onToggleHardCheckbox(raid, raider, event.target.checked)} />
+            }
+        </div>
+    </td>)
 }
 
 export default RaidTierRow;

@@ -9,7 +9,7 @@ import { RaidNames } from './RaidConstants'
 import { getValues } from './SheetsAPI/SheetsAPI'
 
 class RaidSet {
-    constructor(tiers, identifier){
+    constructor(tiers, identifier) {
         this.tiers = tiers;
         this.identifier = identifier;
     }
@@ -29,7 +29,7 @@ class RaidDefinition {
     constructor(name, subtitle, acronym) {
         this.name = name;
         this.subtitle = subtitle;
-        this.acronym = acronym;
+        this.acronym = acronym != null ? acronym : name;
     }
 }
 
@@ -41,21 +41,28 @@ const TeamPage = () => {
     const [isLoading, setIsLoading] = React.useState(true);
 
     useEffect(() => {
-        getValues("Teams", null, true, (results) =>{
-            console.log(results);
+        getValues("Teams", null, true, (results) => {
             let index = results["values"][0].indexOf(teamId);
-            console.log(`index = ${index}`);
-            setTeamName(results["values"][1][index]);
-    
-            let tmpRaiders = [];
-            results["values"][2][index].split('\n').forEach(raiderName => {
-                let raider = new Raider(raiderName);
-                tmpRaiders.push(raider);
-            });
-            setRaiders(tmpRaiders);
 
-            setIsLoading(false);
-    })}, ["teamId"]);
+            let alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+            let column = index + 1;
+            getValues("Teams", `A${column}:Z${column}`, false, (teamResult) => {
+                setTeamName(teamResult["values"][0][1]);
+
+                let tmpRaiders = [];
+                for (let raiderIndex = 3; raiderIndex < teamResult["values"][0].length; raiderIndex++) {
+                    let row = alphabet[raiderIndex];
+                    const raiderData = teamResult["values"][0][raiderIndex];
+                    let raiderDataSplit = raiderData.split('=');
+                    let raider = new Raider(raiderDataSplit[0], raiderDataSplit[1], row + column);
+                    tmpRaiders.push(raider);
+                }
+                setRaiders(tmpRaiders);
+
+                setIsLoading(false);
+            });
+        })
+    }, ["teamId"]);
 
     let arrRaids = BuildArrRaids();
     let heavenswardRaids = BuildHeavenswardRaids();
@@ -121,7 +128,7 @@ function BuildArrRaids() {
         new RaidTier("THE FINAL COIL", tier3Raids, "Savage", false, true),
         new RaidTier("TRIALS", trials, "Extreme", false),
     ];
-    
+
     return new RaidSet(tiers, RaidNames[0]);
 }
 
