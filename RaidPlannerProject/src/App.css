@@ -99,6 +99,8 @@ table th:not(:last-child) {
   flex-direction: column-reverse;
   justify-content: center;
   text-align: right;
+  height: 75px;
+  padding-bottom: 6px;
 }
 
 .raid-tickboxes {
