@@ -79,11 +79,15 @@ const TeamStats = (props) => {
                             return <tr>
                                 <td>{raider.name}</td>
                                 {React.Children.toArray(RaidNames.map((raidId, index) => {
-                                    totalNormal += raiderCounts[raider.name][raidId].normal;
-                                    totalHard += raiderCounts[raider.name][raidId].hard;
+                                    let normalCount = raiderCounts[raider.name][raidId].normal;
+                                    let hardCount = raiderCounts[raider.name][raidId].hard;
+
+                                    totalNormal += normalCount;
+                                    totalHard += hardCount;
+                                    
                                     return <td>
-                                        {`${raiderCounts[raider.name][raidId].normal}/${totalCounts[raidId].normal} - `}
-                                        <b>{`${raiderCounts[raider.name][raidId].hard}/${totalCounts[raidId].hard}`}</b>
+                                        {`${raiderCounts[raider.name][raidId].normal}/${totalCounts[raidId].normal}${normalCount == totalCounts[raidId].normal ? '✔️' : "❌"} - `}
+                                        <b>{`${raiderCounts[raider.name][raidId].hard}/${totalCounts[raidId].hard}${hardCount == totalCounts[raidId].hard ? '✔️' : "❌"}`}</b>
                                     </td>
                                 }))}
 
