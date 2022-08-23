@@ -3,6 +3,8 @@ import { useParams } from "react-router-dom";
 import Modal from 'react-bootstrap/Modal';
 
 import RaidChecklist from './RaidSchedules/RaidChecklist';
+import TeamStats from "./TeamComponents/TeamStats";
+
 import Raider from './RaiderData/Raider';
 import { RaidNames } from './RaidConstants'
 
@@ -12,6 +14,12 @@ class RaidSet {
     constructor(tiers, identifier) {
         this.tiers = tiers;
         this.identifier = identifier;
+        
+        tiers.forEach(tier => {
+            tier.raidDefs.forEach(raid => {
+                raid.parentSet = this;
+            });
+        });
     }
 }
 
@@ -30,6 +38,7 @@ class RaidDefinition {
         this.name = name;
         this.subtitle = subtitle;
         this.acronym = acronym != null ? acronym : name;
+        this.acronymHard = "#" + acronym;
     }
 }
 
@@ -79,6 +88,7 @@ const TeamPage = () => {
                 <Modal.Body>Loading...</Modal.Body>
             </Modal>
             <h1>{teamName}</h1>
+            <TeamStats raiders={raiders} raidSets={[arrRaids, heavenswardRaids, stormbloodRaids, shadowbringerRaids, endwalkerRaids]}></TeamStats>
             <RaidChecklist tierName={RaidNames[0]} raidSet={arrRaids} raiders={raiders}></RaidChecklist>
             <RaidChecklist tierName={RaidNames[1]} raidSet={heavenswardRaids} raiders={raiders}></RaidChecklist>
             <RaidChecklist tierName={RaidNames[2]} raidSet={stormbloodRaids} raiders={raiders}></RaidChecklist>

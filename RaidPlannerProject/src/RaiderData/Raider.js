@@ -12,10 +12,10 @@ class Raider {
                 this.completionStates[raidStateSplit[0]] = raidStateSplit[1];
             });
         }
-
     }
 
-    setRaidCompleted(id, completed) {
+    setRaidCompleted(raid, completed, isHardMode) {
+        let id = isHardMode ? raid.acronymHard : raid.acronym;
         this.completionStates[id] = completed;
 
         setValues("Teams", this.cell, this.getSerializedCompletionStates(), () => {});

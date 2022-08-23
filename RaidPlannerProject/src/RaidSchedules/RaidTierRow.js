@@ -24,19 +24,19 @@ const RaidTierRow = ({ props }) => {
 
 const TickBoxSet = ({ tier, raid, raider }) => {
     let normalModeState = raider.getRaidCompleted(raid.acronym);
-    let hardModeState = raider.getRaidCompleted("#" + raid.acronym);
+    let hardModeState = raider.getRaidCompleted("#" + raid.acronymHard);
 
     const [isNormalCompleted, setIsNormalCompleted] = React.useState(normalModeState);
     const [isHardCompleted, setIsHardCompleted] = React.useState(hardModeState);
 
     const onToggleNormalCheckbox = (raid, raider, value) => {
         setIsNormalCompleted(value);
-        raider.setRaidCompleted(raid.acronym, value);
+        raider.setRaidCompleted(raid, value, false);
     }
 
     const onToggleHardCheckbox = (raid, raider, value) => {
         setIsHardCompleted(value);
-        raider.setRaidCompleted("#" + raid.acronym, value);
+        raider.setRaidCompleted(raid, value, true);
     }
 
     return (<td className='raid-column'>
