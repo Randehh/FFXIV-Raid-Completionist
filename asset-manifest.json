@@ -1,13 +1,13 @@
 {
   "files": {
-    "main.css": "/FFXIV-Raid-Completionist/static/css/main.b2f1c421.css",
+    "main.css": "/FFXIV-Raid-Completionist/static/css/main.1f53cdcb.css",
     "main.js": "/FFXIV-Raid-Completionist/static/js/main.6ea14392.js",
     "index.html": "/FFXIV-Raid-Completionist/index.html",
-    "main.b2f1c421.css.map": "/FFXIV-Raid-Completionist/static/css/main.b2f1c421.css.map",
+    "main.1f53cdcb.css.map": "/FFXIV-Raid-Completionist/static/css/main.1f53cdcb.css.map",
     "main.6ea14392.js.map": "/FFXIV-Raid-Completionist/static/js/main.6ea14392.js.map"
   },
   "entrypoints": [
-    "static/css/main.b2f1c421.css",
+    "static/css/main.1f53cdcb.css",
     "static/js/main.6ea14392.js"
   ]
 }
