@@ -22,7 +22,7 @@ class Raider {
     }
 
     getRaidCompleted(id) {
-        if (!this.completionStates[id]) {
+        if (!this.completionStates[id] || this.completionStates[id] === "false") {
             return false;
         } else {
             return true;
