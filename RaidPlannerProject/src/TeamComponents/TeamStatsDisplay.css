@@ -2,3 +2,8 @@
     margin-right: 10%;
     margin-left: 10%;
 }
+
+.team-table {
+    border-style: solid;
+    border-width: medium;
+}

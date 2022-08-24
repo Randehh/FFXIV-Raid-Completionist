@@ -1,9 +1,11 @@
 import React, { useEffect } from "react";
 import { useParams } from "react-router-dom";
 import Modal from 'react-bootstrap/Modal';
+import Accordion from 'react-bootstrap/Accordion';
 
 import RaidChecklist from './RaidSchedules/RaidChecklist';
 import TeamStatsDisplay from "./TeamComponents/TeamStatsDisplay";
+import RaidRoulette from "./TeamComponents/RaidRoulette";
 
 import Raider from './RaiderData/Raider';
 import TeamStats from "./RaiderData/TeamStats";
@@ -16,7 +18,7 @@ class RaidSet {
     constructor(tiers, identifier) {
         this.tiers = tiers;
         this.identifier = identifier;
-        
+
         tiers.forEach(tier => {
             tier.raidDefs.forEach(raid => {
                 raid.parentSet = this;
@@ -103,13 +105,33 @@ const TeamPage = () => {
                 keyboard={false}>
                 <Modal.Body>Loading...</Modal.Body>
             </Modal>
-            <h1>{teamName}</h1>
-            <TeamStatsDisplay raiders={raiders} teamStats={teamStats}></TeamStatsDisplay>
-            <RaidChecklist tierName={RaidNames[0]} raidSet={arrRaids} raiders={raiders}></RaidChecklist>
-            <RaidChecklist tierName={RaidNames[1]} raidSet={heavenswardRaids} raiders={raiders}></RaidChecklist>
-            <RaidChecklist tierName={RaidNames[2]} raidSet={stormbloodRaids} raiders={raiders}></RaidChecklist>
-            <RaidChecklist tierName={RaidNames[3]} raidSet={shadowbringerRaids} raiders={raiders}></RaidChecklist>
-            <RaidChecklist tierName={RaidNames[4]} raidSet={endwalkerRaids} raiders={raiders}></RaidChecklist>
+            <h1 className="team-name">{teamName}</h1>
+            <Accordion defaultActiveKey="0">
+                <Accordion.Item eventKey="0">
+                    <Accordion.Header><h2>Progress overview</h2></Accordion.Header>
+                    <Accordion.Body>
+                        <TeamStatsDisplay raiders={raiders} teamStats={teamStats}></TeamStatsDisplay>
+                    </Accordion.Body>
+                </Accordion.Item>
+
+                <Accordion.Item eventKey="1">
+                    <Accordion.Header><h2>Raid roulette</h2></Accordion.Header>
+                    <Accordion.Body>
+                        <RaidRoulette></RaidRoulette>
+                    </Accordion.Body>
+                </Accordion.Item>
+
+                <Accordion.Item eventKey="2">
+                    <Accordion.Header><h2>Progress tracker</h2></Accordion.Header>
+                    <Accordion.Body>
+                        <RaidChecklist tierName={RaidNames[0]} raidSet={arrRaids} raiders={raiders}></RaidChecklist>
+                        <RaidChecklist tierName={RaidNames[1]} raidSet={heavenswardRaids} raiders={raiders}></RaidChecklist>
+                        <RaidChecklist tierName={RaidNames[2]} raidSet={stormbloodRaids} raiders={raiders}></RaidChecklist>
+                        <RaidChecklist tierName={RaidNames[3]} raidSet={shadowbringerRaids} raiders={raiders}></RaidChecklist>
+                        <RaidChecklist tierName={RaidNames[4]} raidSet={endwalkerRaids} raiders={raiders}></RaidChecklist>
+                    </Accordion.Body>
+                </Accordion.Item>
+            </Accordion>
         </div>
     );
 }

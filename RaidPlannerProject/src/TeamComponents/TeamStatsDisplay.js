@@ -12,7 +12,7 @@ const TeamStats = (props) => {
         let teamStats = props.teamStats;
         return (
             <div className='team-stats-content'>
-                <Table striped>
+                <Table className='team-table' striped>
                     <thead>
                         <tr>
                             <th>Raider</th>

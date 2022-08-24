@@ -69,8 +69,6 @@ class TeamStats{
         this.totalCounts = totalCounts;
         this.normalCompletedCounts = normalCompletedCounts;
         this.hardCompletedCounts = hardCompletedCounts;
-
-        this.getRandomLeastPlayedRaid(false, true);
     }
 
     getRandomLeastPlayedRaid(normalMode, hardMode){
