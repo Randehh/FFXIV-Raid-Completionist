@@ -81,7 +81,19 @@ const TeamPage = () => {
     let shadowbringerRaids = BuildShadowbringersRaids();
     let endwalkerRaids = BuildEndwalkerRaids();
 
-    let teamStats = new TeamStats(raiders, [arrRaids, heavenswardRaids, stormbloodRaids, shadowbringerRaids, endwalkerRaids]);
+    let raidSets = [arrRaids, heavenswardRaids, stormbloodRaids, shadowbringerRaids, endwalkerRaids];
+
+    let raidsIndex = {};
+    raidSets.forEach(raidSet => {
+        raidSet.tiers.forEach(raidTier => {
+            raidTier.raidDefs.forEach(raid => {
+                raidsIndex[raid.acronym] = raid;
+                raidsIndex[raid.acronymHard] = raid;
+            });
+        });
+    });
+
+    let teamStats = new TeamStats(raiders, raidSets, raidsIndex);
 
     return (
         <div>
