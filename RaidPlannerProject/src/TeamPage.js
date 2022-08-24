@@ -3,9 +3,11 @@ import { useParams } from "react-router-dom";
 import Modal from 'react-bootstrap/Modal';
 
 import RaidChecklist from './RaidSchedules/RaidChecklist';
-import TeamStats from "./TeamComponents/TeamStats";
+import TeamStatsDisplay from "./TeamComponents/TeamStatsDisplay";
 
 import Raider from './RaiderData/Raider';
+import TeamStats from "./RaiderData/TeamStats";
+
 import { RaidNames } from './RaidConstants'
 
 import { getValues } from './SheetsAPI/SheetsAPI'
@@ -79,6 +81,8 @@ const TeamPage = () => {
     let shadowbringerRaids = BuildShadowbringersRaids();
     let endwalkerRaids = BuildEndwalkerRaids();
 
+    let teamStats = new TeamStats(raiders, [arrRaids, heavenswardRaids, stormbloodRaids, shadowbringerRaids, endwalkerRaids]);
+
     return (
         <div>
             <Modal show={isLoading}
@@ -88,7 +92,7 @@ const TeamPage = () => {
                 <Modal.Body>Loading...</Modal.Body>
             </Modal>
             <h1>{teamName}</h1>
-            <TeamStats raiders={raiders} raidSets={[arrRaids, heavenswardRaids, stormbloodRaids, shadowbringerRaids, endwalkerRaids]}></TeamStats>
+            <TeamStatsDisplay raiders={raiders} teamStats={teamStats}></TeamStatsDisplay>
             <RaidChecklist tierName={RaidNames[0]} raidSet={arrRaids} raiders={raiders}></RaidChecklist>
             <RaidChecklist tierName={RaidNames[1]} raidSet={heavenswardRaids} raiders={raiders}></RaidChecklist>
             <RaidChecklist tierName={RaidNames[2]} raidSet={stormbloodRaids} raiders={raiders}></RaidChecklist>
