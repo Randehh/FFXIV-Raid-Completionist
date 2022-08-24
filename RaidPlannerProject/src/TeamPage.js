@@ -117,7 +117,7 @@ const TeamPage = () => {
                 <Accordion.Item eventKey="1">
                     <Accordion.Header><h2>Raid roulette</h2></Accordion.Header>
                     <Accordion.Body>
-                        <RaidRoulette></RaidRoulette>
+                        <RaidRoulette teamStats={teamStats}></RaidRoulette>
                     </Accordion.Body>
                 </Accordion.Item>
 
