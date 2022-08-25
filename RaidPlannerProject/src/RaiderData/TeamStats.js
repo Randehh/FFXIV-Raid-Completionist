@@ -92,8 +92,8 @@ class TeamStats {
         } else {
             return "";
         }
-        let sorted = arrayToPick.sort((a, b) => a[1] - b[1]);
-        let sliced = sorted.slice(sorted.length / 2);
+        let sorted = arrayToPick.sort((a, b) => b[1] - a[1]);
+        let sliced = sorted.slice(sorted.length / 1.5);
         let raidId = sample(sliced);
         let raid = this.raidIndex[raidId[0]];
         return raid;
