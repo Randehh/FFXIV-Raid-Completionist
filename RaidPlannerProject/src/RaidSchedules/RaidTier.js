@@ -29,7 +29,7 @@ class RaidTier extends React.Component {
                                         <div className='mini-subtitle'>{raid.subtitle}</div>
                                         <div className='raid-difficulty'>
                                             <div>Normal</div>
-                                            {!this.props.tier.hideHardMode &&
+                                            {this.props.tier.raidHardDefs[index] != null &&
                                                 <div>{this.props.tier.hardPrefix}</div>
                                             }
                                         </div>

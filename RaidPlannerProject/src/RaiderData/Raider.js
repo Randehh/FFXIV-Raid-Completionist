@@ -14,8 +14,8 @@ class Raider {
         }
     }
 
-    setRaidCompleted(raid, completed, isHardMode) {
-        let id = isHardMode ? raid.acronymHard : raid.acronym;
+    setRaidCompleted(raid, completed) {
+        let id = raid.acronym;
         this.completionStates[id] = completed;
 
         setValues("Teams", this.cell, this.getSerializedCompletionStates(), () => {});
@@ -32,7 +32,6 @@ class Raider {
     getSerializedCompletionStates(){
         let serialized = this.name + "=";
         for (let key in this.completionStates) {
-            console.log("key " + key + " has value " + this.completionStates[key]);
             serialized += `${key}-${this.completionStates[key]},`;
         }
         serialized = serialized.replace(/,+$/, '');

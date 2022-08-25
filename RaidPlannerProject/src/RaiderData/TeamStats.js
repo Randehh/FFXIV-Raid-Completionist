@@ -31,15 +31,17 @@ class TeamStats{
                             setCountNormal++;
                             normalCompletedCounts[raid.acronym] = normalCompletedCounts[raid.acronym] == null ? 0 : normalCompletedCounts[raid.acronym]+ 1;
                         }
-                        if (raider.getRaidCompleted(raid.acronymHard)) {
-                            setCountHard++;
-                            hardCompletedCounts[raid.acronymHard] = hardCompletedCounts[raid.acronymHard] == null ? 0 : hardCompletedCounts[raid.acronymHard]+ 1;
-                        }
 
                         totalNormal++;
-                        if (!tier.hideHardMode) {
-                            totalHard++;
+                    });
+
+                    tier.raidHardDefs.forEach(raid => {
+                        if (raider.getRaidCompleted(raid.acronym)) {
+                            setCountHard++;
+                            hardCompletedCounts[raid.acronym] = hardCompletedCounts[raid.acronym] == null ? 0 : hardCompletedCounts[raid.acronym]+ 1;
                         }
+
+                        totalHard++;
                     });
                 });
                 c[set.identifier] = {

@@ -28,12 +28,18 @@ class RaidSet {
 }
 
 class RaidTier {
-    constructor(name, raidDefs, hardPrefix, printNames, hideHardMode) {
+    constructor(name, raidDefs, hardPrefix, hardSuffix, printNames, hideHardMode) {
         this.name = name;
         this.raidDefs = raidDefs;
+        this.raidHardDefs = [];
         this.hardPrefix = hardPrefix;
         this.printNames = printNames;
-        this.hideHardMode = hideHardMode;
+
+        if(!hideHardMode || hideHardMode == false){
+            raidDefs.forEach(raid => {
+                this.raidHardDefs.push(new RaidDefinition(raid.name + hardSuffix, raid.subtitle, "#" + raid.acronym));
+            });
+        }
     }
 }
 
@@ -42,7 +48,6 @@ class RaidDefinition {
         this.name = name;
         this.subtitle = subtitle;
         this.acronym = acronym != null ? acronym : name;
-        this.acronymHard = "#" + this.acronym;
     }
 }
 
@@ -85,12 +90,15 @@ const TeamPage = () => {
 
     let raidSets = [arrRaids, heavenswardRaids, stormbloodRaids, shadowbringerRaids, endwalkerRaids];
 
+    console.log(raidSets)
     let raidsIndex = {};
     raidSets.forEach(raidSet => {
         raidSet.tiers.forEach(raidTier => {
             raidTier.raidDefs.forEach(raid => {
                 raidsIndex[raid.acronym] = raid;
-                raidsIndex[raid.acronymHard] = raid;
+            });
+            raidTier.raidHardDefs.forEach(raid => {
+                raidsIndex[raid.acronym] = raid;
             });
         });
     });
@@ -171,10 +179,10 @@ function BuildArrRaids() {
     ]
 
     let tiers = [
-        new RaidTier("THE FIRST COIL", tier1Raids, "Savage", true, true),
-        new RaidTier("THE SECOND COIL", tier2Raids, "Savage", false),
-        new RaidTier("THE FINAL COIL", tier3Raids, "Savage", false, true),
-        new RaidTier("TRIALS", trials, "Extreme", false),
+        new RaidTier("THE FIRST COIL", tier1Raids, "Savage", "S", true, true),
+        new RaidTier("THE SECOND COIL", tier2Raids, "Savage", "S", false),
+        new RaidTier("THE FINAL COIL", tier3Raids, "Savage", "S", false, true),
+        new RaidTier("TRIALS", trials, "Extreme", "(EX)", false),
     ];
 
     return new RaidSet(tiers, RaidNames[0]);
@@ -182,24 +190,24 @@ function BuildArrRaids() {
 
 function BuildHeavenswardRaids() {
     let tier1Raids = [
-        new RaidDefinition("A1S", "Fist of the Father"),
-        new RaidDefinition("A2S", "Cuff of the Father"),
-        new RaidDefinition("A3S", "Arm of the Father"),
-        new RaidDefinition("A4S", "Burden of the Father"),
+        new RaidDefinition("A1", "Fist of the Father"),
+        new RaidDefinition("A2", "Cuff of the Father"),
+        new RaidDefinition("A3", "Arm of the Father"),
+        new RaidDefinition("A4", "Burden of the Father"),
     ];
 
     let tier2Raids = [
-        new RaidDefinition("A5S", "Fist of the Son"),
-        new RaidDefinition("A6S", "Cuff of the Son"),
-        new RaidDefinition("A7S", "Arm of the Son"),
-        new RaidDefinition("A8S", "Burden of the Son"),
+        new RaidDefinition("A5", "Fist of the Son"),
+        new RaidDefinition("A6", "Cuff of the Son"),
+        new RaidDefinition("A7", "Arm of the Son"),
+        new RaidDefinition("A8", "Burden of the Son"),
     ];
 
     let tier3Raids = [
-        new RaidDefinition("A9S", "Eyes of the Creator"),
-        new RaidDefinition("A10S", "Breath of the Creator"),
-        new RaidDefinition("A11S", "Heart of the Creator"),
-        new RaidDefinition("A12S", "Soul of the Creator"),
+        new RaidDefinition("A9", "Eyes of the Creator"),
+        new RaidDefinition("A10", "Breath of the Creator"),
+        new RaidDefinition("A11", "Heart of the Creator"),
+        new RaidDefinition("A12", "Soul of the Creator"),
     ];
 
     let trials = [
@@ -213,34 +221,34 @@ function BuildHeavenswardRaids() {
     ]
 
     let tiers = [
-        new RaidTier("GORDIAS", tier1Raids, "Savage", true),
-        new RaidTier("MIDAS", tier2Raids, "Savage", false),
-        new RaidTier("THE CREATOR", tier3Raids, "Savage", false),
-        new RaidTier("TRIALS", trials, "Extreme", false),
+        new RaidTier("GORDIAS", tier1Raids, "Savage", "S", true),
+        new RaidTier("MIDAS", tier2Raids, "Savage", "S", false),
+        new RaidTier("THE CREATOR", tier3Raids, "Savage", "S", false),
+        new RaidTier("TRIALS", trials, "Extreme", "(EX)", false),
     ];
     return new RaidSet(tiers, RaidNames[1]);
 }
 
 function BuildStormbloodRaids() {
     let tier1Raids = [
-        new RaidDefinition("O1S", "V1.0"),
-        new RaidDefinition("O2S", "V2.0"),
-        new RaidDefinition("O3S", "V3.0"),
-        new RaidDefinition("O4S", "V4.0"),
+        new RaidDefinition("O1", "V1.0"),
+        new RaidDefinition("O2", "V2.0"),
+        new RaidDefinition("O3", "V3.0"),
+        new RaidDefinition("O4", "V4.0"),
     ];
 
     let tier2Raids = [
-        new RaidDefinition("O5S", "V1.0"),
-        new RaidDefinition("O6S", "V2.0"),
-        new RaidDefinition("O7S", "V3.0"),
-        new RaidDefinition("O8S", "V4.0"),
+        new RaidDefinition("O5", "V1.0"),
+        new RaidDefinition("O6", "V2.0"),
+        new RaidDefinition("O7", "V3.0"),
+        new RaidDefinition("O8", "V4.0"),
     ];
 
     let tier3Raids = [
-        new RaidDefinition("O9S", "V1.0"),
-        new RaidDefinition("O10S", "V2.0"),
-        new RaidDefinition("O11S", "V3.0"),
-        new RaidDefinition("O12S", "V4.0"),
+        new RaidDefinition("O9", "V1.0"),
+        new RaidDefinition("O10", "V2.0"),
+        new RaidDefinition("O11", "V3.0"),
+        new RaidDefinition("O12", "V4.0"),
     ];
 
     let trials = [
@@ -255,10 +263,10 @@ function BuildStormbloodRaids() {
     ]
 
     let tiers = [
-        new RaidTier("DELTASCAPE", tier1Raids, "Savage", true),
-        new RaidTier("OMEGASCAPE", tier2Raids, "Savage", false),
-        new RaidTier("ALPHASCAPE", tier3Raids, "Savage", false),
-        new RaidTier("TRIALS", trials, "Extreme", false),
+        new RaidTier("DELTASCAPE", tier1Raids, "Savage", "S", true),
+        new RaidTier("OMEGASCAPE", tier2Raids, "Savage", "S", false),
+        new RaidTier("ALPHASCAPE", tier3Raids, "Savage", "S", false),
+        new RaidTier("TRIALS", trials, "Extreme", "(EX)", false),
     ];
 
     return new RaidSet(tiers, RaidNames[2]);
@@ -266,24 +274,24 @@ function BuildStormbloodRaids() {
 
 function BuildShadowbringersRaids() {
     let tier1Raids = [
-        new RaidDefinition("E1S", "Resurrection"),
-        new RaidDefinition("E2S", "Descent"),
-        new RaidDefinition("E3S", "Inundation"),
-        new RaidDefinition("E4S", "Sepulture"),
+        new RaidDefinition("E1", "Resurrection"),
+        new RaidDefinition("E2", "Descent"),
+        new RaidDefinition("E3", "Inundation"),
+        new RaidDefinition("E4", "Sepulture"),
     ];
 
     let tier2Raids = [
-        new RaidDefinition("E5S", "Fulmination"),
-        new RaidDefinition("E6S", "Furor"),
-        new RaidDefinition("E7S", "Iconoclasm"),
-        new RaidDefinition("E8S", "Refulgence"),
+        new RaidDefinition("E5", "Fulmination"),
+        new RaidDefinition("E6", "Furor"),
+        new RaidDefinition("E7", "Iconoclasm"),
+        new RaidDefinition("E8", "Refulgence"),
     ];
 
     let tier3Raids = [
-        new RaidDefinition("E9S", "Umbra"),
-        new RaidDefinition("E10S", "Litany"),
-        new RaidDefinition("E11S", "Anamorphosis"),
-        new RaidDefinition("E12S", "Eternity"),
+        new RaidDefinition("E9", "Umbra"),
+        new RaidDefinition("E10", "Litany"),
+        new RaidDefinition("E11", "Anamorphosis"),
+        new RaidDefinition("E12", "Eternity"),
     ];
 
     let trials = [
@@ -297,20 +305,20 @@ function BuildShadowbringersRaids() {
     ]
 
     let tiers = [
-        new RaidTier("EDEN'S GATE", tier1Raids, "Savage", true),
-        new RaidTier("EDEN'S VERSE", tier2Raids, "Savage", false),
-        new RaidTier("EDEN'S PROMISE", tier3Raids, "Savage", false),
-        new RaidTier("TRIALS", trials, "Extreme", false),
+        new RaidTier("EDEN'S GATE", tier1Raids, "Savage", "S", true),
+        new RaidTier("EDEN'S VERSE", tier2Raids, "Savage", "S", false),
+        new RaidTier("EDEN'S PROMISE", tier3Raids, "Savage", "S", false),
+        new RaidTier("TRIALS", trials, "Extreme", "(EX)", false),
     ];
     return new RaidSet(tiers, RaidNames[3]);
 }
 
 function BuildEndwalkerRaids() {
     let tier1Raids = [
-        new RaidDefinition("P1S", "The First Circle"),
-        new RaidDefinition("P2S", "The Second Circle"),
-        new RaidDefinition("P3S", "The Third Circle"),
-        new RaidDefinition("P4S", "The Fourth Circle"),
+        new RaidDefinition("P1", "The First Circle"),
+        new RaidDefinition("P2", "The Second Circle"),
+        new RaidDefinition("P3", "The Third Circle"),
+        new RaidDefinition("P4", "The Fourth Circle"),
     ];
 
     let trials = [
@@ -320,8 +328,8 @@ function BuildEndwalkerRaids() {
     ]
 
     let tiers = [
-        new RaidTier("ASPHODELOS", tier1Raids, "Savage", true),
-        new RaidTier("TRIALS", trials, "Extreme", false),
+        new RaidTier("ASPHODELOS", tier1Raids, "Savage", "S", true),
+        new RaidTier("TRIALS", trials, "Extreme", "EX", false),
     ];
     return new RaidSet(tiers, RaidNames[4]);
 }
