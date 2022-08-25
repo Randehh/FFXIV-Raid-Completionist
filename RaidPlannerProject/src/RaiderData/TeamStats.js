@@ -1,13 +1,13 @@
 import { sample } from "lodash";
 
-class TeamStats{
+class TeamStats {
     raidIndex = {};
     raiderCounts = {};
     totalCounts = {};
     normalCompletedCounts = {};
     hardCompletedCounts = {};
 
-    constructor(raiders, raidSets, raidIndex){
+    constructor(raiders, raidSets, raidIndex) {
         this.raidIndex = raidIndex;
 
         let raiderCounts = {};
@@ -27,18 +27,26 @@ class TeamStats{
                 let setCountHard = 0;
                 set.tiers.forEach(tier => {
                     tier.raidDefs.forEach(raid => {
+                        if (normalCompletedCounts[raid.acronym] == null) {
+                            normalCompletedCounts[raid.acronym] = 0;
+                        }
+
                         if (raider.getRaidCompleted(raid.acronym)) {
                             setCountNormal++;
-                            normalCompletedCounts[raid.acronym] = normalCompletedCounts[raid.acronym] == null ? 0 : normalCompletedCounts[raid.acronym]+ 1;
+                            normalCompletedCounts[raid.acronym] = normalCompletedCounts[raid.acronym] + 1;
                         }
 
                         totalNormal++;
                     });
 
                     tier.raidHardDefs.forEach(raid => {
+                        if (hardCompletedCounts[raid.acronym] == null) {
+                            hardCompletedCounts[raid.acronym] = 0;
+                        }
+
                         if (raider.getRaidCompleted(raid.acronym)) {
                             setCountHard++;
-                            hardCompletedCounts[raid.acronym] = hardCompletedCounts[raid.acronym] == null ? 0 : hardCompletedCounts[raid.acronym]+ 1;
+                            hardCompletedCounts[raid.acronym] = hardCompletedCounts[raid.acronym] + 1;
                         }
 
                         totalHard++;
@@ -73,15 +81,15 @@ class TeamStats{
         this.hardCompletedCounts = hardCompletedCounts;
     }
 
-    getRandomLeastPlayedRaid(normalMode, hardMode){
+    getRandomLeastPlayedRaid(normalMode, hardMode) {
         let arrayToPick = [];
-        if(normalMode == true && hardMode == true){
+        if (normalMode == true && hardMode == true) {
             arrayToPick = Object.entries(this.normalCompletedCounts).concat(Object.entries(this.hardCompletedCounts));
-        }else if(normalMode == true){
+        } else if (normalMode == true) {
             arrayToPick = Object.entries(this.normalCompletedCounts);
-        }else if(hardMode == true){
+        } else if (hardMode == true) {
             arrayToPick = Object.entries(this.hardCompletedCounts);
-        }else{
+        } else {
             return "";
         }
         let sorted = arrayToPick.sort((a, b) => a[1] - b[1]);
