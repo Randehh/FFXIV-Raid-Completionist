@@ -59,26 +59,24 @@ export async function getValues(sheetId, cells, getByColumn, onCompleted) {
 
     let response = await fetch(requestUrl);
 
-    if(onCompleted) {
+    if (onCompleted) {
         let jsonResponse = await response.json();
         onCompleted(jsonResponse);
     }
 }
 
-export async function setValues(sheetId, cells, value, onCompleted) {
+export async function setValues(sheetId, cells, values, onCompleted) {
     let cellNotation = getCellNotation(sheetId, cells);
     let requestUrl = appendHeaders(PutValuesUrl(SHEET_ID, cellNotation), true, false, false);
 
     let jsonData = {
         "values": [
-            [
-                value
-            ]
+            values
         ]
     }
     let response = await fetch(requestUrl, buildPostRequest(jsonData, 'PUT'));
 
-    if(onCompleted) {
+    if (onCompleted) {
         let jsonResponse = await response.json();
         onCompleted(jsonResponse);
     }
@@ -94,7 +92,7 @@ export async function appendValues(sheetId, cells, values, horizontal, onComplet
     }
     let response = await fetch(requestUrl, buildPostRequest(jsonData, 'POST'));
 
-    if(onCompleted) {
+    if (onCompleted) {
         let jsonResponse = await response.json();
         onCompleted(jsonResponse);
     }

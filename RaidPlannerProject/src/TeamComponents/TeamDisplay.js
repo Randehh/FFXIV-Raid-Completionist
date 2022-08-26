@@ -1,13 +1,11 @@
 import './TeamDisplay.css';
 
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 
 import Modal from 'react-bootstrap/Modal';
 import Button from 'react-bootstrap/Button';
 
-
-function TeamDisplay(props) {
-
+const TeamDisplay = (props) => {
     const [isWorking, setIsWorking] = useState(false);
 
     const [show, setShow] = useState(false);
@@ -18,7 +16,7 @@ function TeamDisplay(props) {
 
     const handleConfirm = () => {
         setIsWorking(true);
-        props.props.onConfirm(teamName, teamMembers, () =>{
+        props.onConfirm(teamName, teamMembers, () =>{
             setShow(false);
         });
     }
@@ -28,13 +26,18 @@ function TeamDisplay(props) {
         setShow(true);
     }
 
-    const [teamName, setTeamName] = React.useState({});
-    const [teamMembers, setTeamMembers] = React.useState({});
+    const [teamName, setTeamName] = React.useState("");
+    const [teamMembers, setTeamMembers] = React.useState("");
+
+    useEffect(() => {
+        setTeamName(props.editTeam != null ? props.editTeam.teamName : "");
+        setTeamMembers(props.editTeam != null ? props.editTeam.getTeamNames() : "");
+    }, [props.editTeam])
 
     return (
         <>
             <Button variant="primary" onClick={handleShow}>
-                {props.props.buttonText}
+                {props.buttonText}
             </Button>
             <Modal
                 show={show}
@@ -43,17 +46,17 @@ function TeamDisplay(props) {
                 backdrop="static"
                 keyboard={false}>
                 <Modal.Header closeButton>
-                    <Modal.Title>{props.props.title}</Modal.Title>
+                    <Modal.Title>{props.title}</Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
                     <div className='content'>
                         <div className='input-field-container'>
                             <div className='input-field-label'>Team name</div>
-                            <input className='input-field-input' type="text" onChange={event => setTeamName(event.target.value)}></input>
+                            <input className='input-field-input' type="text" value={teamName} onChange={event => setTeamName(event.target.value)}></input>
                         </div>
                         <div className='input-field-container' style={{ height: "250px" }}>
                             <div className='input-field-label'>Members, separated by new line</div>
-                            <textarea className='input-field-input' onChange={event => setTeamMembers(event.target.value)}></textarea>
+                            <textarea className='input-field-input' value={teamMembers} onChange={event => setTeamMembers(event.target.value)}></textarea>
                         </div>
                     </div>
                 </Modal.Body>
@@ -62,7 +65,7 @@ function TeamDisplay(props) {
                         Close
                     </Button>
                     <Button variant="primary" disabled={isWorking} onClick={handleConfirm}>
-                        {props.props.confirmText}
+                        {props.confirmText}
                     </Button>
                 </Modal.Footer>
             </Modal>

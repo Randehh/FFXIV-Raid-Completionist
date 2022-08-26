@@ -17,38 +17,37 @@ const NavBar = () => {
 
     return (
         <>
-        <div className='nav-bar'>
-            <Link to="/FFXIV-Raid-Completionist/">
-                <Button className='nav-bar-button' type="button">Home</Button>
-            </Link>
-
-            <div className='nav-bar-search'>
-                <div>Search for team:</div>
-                <input className='nav-bar-element' type="text" onChange={event => setTeam(event.target.value)}></input>
-                <Link to={"/FFXIV-Raid-Completionist/Team/" + input}>
-                    <Button className='nav-bar-button' type="button">Find</Button>
+            <div className='nav-bar'>
+                <Link to="/FFXIV-Raid-Completionist/">
+                    <Button className='nav-bar-button' type="button">Home</Button>
                 </Link>
+
+                <div className='nav-bar-search'>
+                    <div>Search for team:</div>
+                    <input className='nav-bar-element' type="text" onChange={event => setTeam(event.target.value)}></input>
+                    <Link to={"/FFXIV-Raid-Completionist/Team/" + input}>
+                        <Button className='nav-bar-button' type="button">Find</Button>
+                    </Link>
+                </div>
+
+                <TeamDisplay
+                    title="Create new team"
+                    buttonText="Create team"
+                    confirmText="Create"
+                    onConfirm={(teamName, teamMembers, callback) => {
+                        let id = generateUUID();
+                        let bodyData = [id, teamName, teamMembers];
+                        teamMembers.split('\n').forEach(memberName => {
+                            bodyData.push(memberName + "=");
+                        });
+                        appendValues(null, "A1:C1", bodyData, false, (response) => {
+                            navigate("/FFXIV-Raid-Completionist/Team/" + id, { replace: true });
+                        });
+                        callback();
+                    }
+                    } />
             </div>
 
-            <TeamDisplay props={{
-                title: "Create new team",
-                buttonText:"Create team",
-                confirmText: "Create",
-                onConfirm: (teamName, teamMembers, callback) => {
-                    let id = generateUUID();
-                    let bodyData = [id, teamName, teamMembers];
-                    teamMembers.split('\n').forEach(memberName => {
-                        bodyData.push(memberName+"=");
-                    });
-                    appendValues(null, "A1:C1", bodyData, false, (response) =>{
-                        console.log(response);
-                        navigate("/FFXIV-Raid-Completionist/Team/" + id, {replace: true});
-                    });
-                    callback();
-                }
-            }}/>
-        </div>
-        
         </>
     );
 }

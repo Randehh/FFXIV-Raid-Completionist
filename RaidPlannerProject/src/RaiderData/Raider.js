@@ -6,7 +6,7 @@ class Raider {
         this.completionStates = {};
         this.cell = cell;
 
-        if (rawCompletionStates.length !== 0){
+        if (rawCompletionStates.length !== 0) {
             rawCompletionStates.split(',').forEach(raidState => {
                 let raidStateSplit = raidState.split('-');
                 this.completionStates[raidStateSplit[0]] = raidStateSplit[1];
@@ -18,7 +18,7 @@ class Raider {
         let id = raid.acronym;
         this.completionStates[id] = completed;
 
-        setValues("Teams", this.cell, this.getSerializedCompletionStates(), () => {});
+        setValues("Teams", [this.cell], this.getSerializedCompletionStates(), () => { });
     }
 
     getRaidCompleted(id) {
@@ -29,13 +29,12 @@ class Raider {
         }
     }
 
-    getSerializedCompletionStates(){
+    getSerializedCompletionStates() {
         let serialized = this.name + "=";
         for (let key in this.completionStates) {
             serialized += `${key}-${this.completionStates[key]},`;
         }
         serialized = serialized.replace(/,+$/, '');
-        console.log(serialized);
         return serialized;
     }
 }

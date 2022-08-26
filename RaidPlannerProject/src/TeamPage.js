@@ -7,8 +7,10 @@ import RaidChecklist from './RaidSchedules/RaidChecklist';
 import TeamStatsDisplay from "./TeamComponents/TeamStatsDisplay";
 import RaidRoulette from "./TeamComponents/RaidRoulette";
 
+import TeamData from "./RaiderData/TeamData";
 import Raider from './RaiderData/Raider';
 import TeamStats from "./RaiderData/TeamStats";
+import TeamSettings from "./TeamComponents/TeamSettings";
 
 import { RaidNames } from './RaidConstants'
 
@@ -41,7 +43,7 @@ class RaidTier {
         this.hardPrefix = hardPrefix;
         this.printNames = printNames;
 
-        if(!hideHardMode || hideHardMode == false){
+        if (!hideHardMode || hideHardMode == false) {
             raidDefs.forEach(raid => {
                 this.raidHardDefs.push(new RaidDefinition(raid.name + hardSuffix, raid.subtitle, "#" + raid.acronym, raid.imageUrl));
             });
@@ -61,28 +63,34 @@ class RaidDefinition {
 const TeamPage = () => {
     const { teamId } = useParams();
 
-    const [teamName, setTeamName] = React.useState("Loading...");
-    const [raiders, setRaiders] = React.useState([]);
     const [isLoading, setIsLoading] = React.useState(true);
+    const [teamData, setTeamData] = React.useState(new TeamData("", "Loading...", []));
 
     useEffect(() => {
         getValues("Teams", null, true, (results) => {
             let index = results["values"][0].indexOf(teamId);
 
             let alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
-            let column = index + 1;
-            getValues("Teams", `A${column}:Z${column}`, false, (teamResult) => {
-                setTeamName(teamResult["values"][0][1]);
+            let row = index + 1;
+            getValues("Teams", `A${row}:Z${row}`, false, (teamResult) => {
+                let teamName = teamResult["values"][0][1]
 
-                let tmpRaiders = [];
+                let raiders = [];
+                let finalRaiderIndex = 0;
+                let raidersToShow = teamResult["values"][0][2];
                 for (let raiderIndex = 3; raiderIndex < teamResult["values"][0].length; raiderIndex++) {
-                    let row = alphabet[raiderIndex];
+                    let column = alphabet[raiderIndex];
                     const raiderData = teamResult["values"][0][raiderIndex];
                     let raiderDataSplit = raiderData.split('=');
-                    let raider = new Raider(raiderDataSplit[0], raiderDataSplit[1], row + column);
-                    tmpRaiders.push(raider);
+                    if (raidersToShow.includes(raiderDataSplit[0])) {
+                        let raider = new Raider(raiderDataSplit[0], raiderDataSplit[1], column + row);
+                        raiders.push(raider);
+                    }
+
+                    finalRaiderIndex = raiderIndex;
                 }
-                setRaiders(tmpRaiders);
+
+                setTeamData(new TeamData(teamId, teamName, raiders, row, finalRaiderIndex));
 
                 setIsLoading(false);
             });
@@ -97,7 +105,6 @@ const TeamPage = () => {
 
     let raidSets = [arrRaids, heavenswardRaids, stormbloodRaids, shadowbringerRaids, endwalkerRaids];
 
-    console.log(raidSets)
     let raidsIndex = {};
     raidSets.forEach(raidSet => {
         raidSet.tiers.forEach(raidTier => {
@@ -110,7 +117,7 @@ const TeamPage = () => {
         });
     });
 
-    let teamStats = new TeamStats(raiders, raidSets, raidsIndex);
+    let teamStats = new TeamStats(teamData.raiders, raidSets, raidsIndex);
 
     return (
         <div>
@@ -120,12 +127,12 @@ const TeamPage = () => {
                 keyboard={false}>
                 <Modal.Body>Loading...</Modal.Body>
             </Modal>
-            <h1 className="team-name">{teamName}</h1>
+            <h1 className="team-name">{teamData.teamName}</h1>
             <Accordion defaultActiveKey="0">
                 <Accordion.Item eventKey="0">
                     <Accordion.Header><h2>Progress overview</h2></Accordion.Header>
                     <Accordion.Body>
-                        <TeamStatsDisplay raiders={raiders} teamStats={teamStats}></TeamStatsDisplay>
+                        <TeamStatsDisplay raiders={teamData.raiders} teamStats={teamStats}></TeamStatsDisplay>
                     </Accordion.Body>
                 </Accordion.Item>
 
@@ -139,11 +146,18 @@ const TeamPage = () => {
                 <Accordion.Item eventKey="2">
                     <Accordion.Header><h2>Progress tracker</h2></Accordion.Header>
                     <Accordion.Body>
-                        <RaidChecklist tierName={RaidNames[0]} raidSet={arrRaids} raiders={raiders}></RaidChecklist>
-                        <RaidChecklist tierName={RaidNames[1]} raidSet={heavenswardRaids} raiders={raiders}></RaidChecklist>
-                        <RaidChecklist tierName={RaidNames[2]} raidSet={stormbloodRaids} raiders={raiders}></RaidChecklist>
-                        <RaidChecklist tierName={RaidNames[3]} raidSet={shadowbringerRaids} raiders={raiders}></RaidChecklist>
-                        <RaidChecklist tierName={RaidNames[4]} raidSet={endwalkerRaids} raiders={raiders}></RaidChecklist>
+                        <RaidChecklist tierName={RaidNames[0]} raidSet={arrRaids} raiders={teamData.raiders}></RaidChecklist>
+                        <RaidChecklist tierName={RaidNames[1]} raidSet={heavenswardRaids} raiders={teamData.raiders}></RaidChecklist>
+                        <RaidChecklist tierName={RaidNames[2]} raidSet={stormbloodRaids} raiders={teamData.raiders}></RaidChecklist>
+                        <RaidChecklist tierName={RaidNames[3]} raidSet={shadowbringerRaids} raiders={teamData.raiders}></RaidChecklist>
+                        <RaidChecklist tierName={RaidNames[4]} raidSet={endwalkerRaids} raiders={teamData.raiders}></RaidChecklist>
+                    </Accordion.Body>
+                </Accordion.Item>
+
+                <Accordion.Item eventKey="3">
+                    <Accordion.Header><h2>Settings</h2></Accordion.Header>
+                    <Accordion.Body>
+                        <TeamSettings teamData={teamData}></TeamSettings>
                     </Accordion.Body>
                 </Accordion.Item>
             </Accordion>
