@@ -9,7 +9,7 @@ class RaidChecklist extends React.Component{
             <div style={{ display: "flex", justifyContent: "center" }}>
 
                 {React.Children.toArray(this.props.raidSet.tiers.map((tier, index) => {
-                    return <RaidTier tier={tier} raiders={this.props.raiders} />
+                    return <RaidTier tier={tier} raiders={this.props.raiders} focusRaider={this.props.focusRaider} />
                 }))}
             </div>
         </div>

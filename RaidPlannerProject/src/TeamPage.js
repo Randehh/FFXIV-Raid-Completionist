@@ -65,6 +65,9 @@ const TeamPage = () => {
 
     const [isLoading, setIsLoading] = React.useState(true);
     const [teamData, setTeamData] = React.useState(new TeamData("", "Loading...", []));
+    const [focusRaider, setFocusRaider] = React.useState(null);
+
+    let onFocusRaiderChanged = (raider) => setFocusRaider(raider);
 
     useEffect(() => {
         getValues("Teams", null, true, (results) => {
@@ -132,7 +135,7 @@ const TeamPage = () => {
                 <Accordion.Item eventKey="0">
                     <Accordion.Header><h2>Progress overview</h2></Accordion.Header>
                     <Accordion.Body>
-                        <TeamStatsDisplay raiders={teamData.raiders} teamStats={teamStats}></TeamStatsDisplay>
+                        <TeamStatsDisplay raiders={teamData.raiders} teamStats={teamStats} focusRaider={focusRaider}></TeamStatsDisplay>
                     </Accordion.Body>
                 </Accordion.Item>
 
@@ -146,18 +149,18 @@ const TeamPage = () => {
                 <Accordion.Item eventKey="2">
                     <Accordion.Header><h2>Progress tracker</h2></Accordion.Header>
                     <Accordion.Body>
-                        <RaidChecklist tierName={RaidNames[0]} raidSet={arrRaids} raiders={teamData.raiders}></RaidChecklist>
-                        <RaidChecklist tierName={RaidNames[1]} raidSet={heavenswardRaids} raiders={teamData.raiders}></RaidChecklist>
-                        <RaidChecklist tierName={RaidNames[2]} raidSet={stormbloodRaids} raiders={teamData.raiders}></RaidChecklist>
-                        <RaidChecklist tierName={RaidNames[3]} raidSet={shadowbringerRaids} raiders={teamData.raiders}></RaidChecklist>
-                        <RaidChecklist tierName={RaidNames[4]} raidSet={endwalkerRaids} raiders={teamData.raiders}></RaidChecklist>
+                        <RaidChecklist tierName={RaidNames[0]} raidSet={arrRaids} raiders={teamData.raiders} focusRaider={focusRaider}></RaidChecklist>
+                        <RaidChecklist tierName={RaidNames[1]} raidSet={heavenswardRaids} raiders={teamData.raiders} focusRaider={focusRaider}></RaidChecklist>
+                        <RaidChecklist tierName={RaidNames[2]} raidSet={stormbloodRaids} raiders={teamData.raiders} focusRaider={focusRaider}></RaidChecklist>
+                        <RaidChecklist tierName={RaidNames[3]} raidSet={shadowbringerRaids} raiders={teamData.raiders} focusRaider={focusRaider}></RaidChecklist>
+                        <RaidChecklist tierName={RaidNames[4]} raidSet={endwalkerRaids} raiders={teamData.raiders} focusRaider={focusRaider}></RaidChecklist>
                     </Accordion.Body>
                 </Accordion.Item>
 
                 <Accordion.Item eventKey="3">
                     <Accordion.Header><h2>Settings</h2></Accordion.Header>
                     <Accordion.Body>
-                        <TeamSettings teamData={teamData}></TeamSettings>
+                        <TeamSettings teamData={teamData} onFocusRaiderChanged={onFocusRaiderChanged}></TeamSettings>
                     </Accordion.Body>
                 </Accordion.Item>
             </Accordion>

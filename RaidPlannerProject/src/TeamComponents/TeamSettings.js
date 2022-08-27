@@ -1,18 +1,20 @@
-import React, { useState } from 'react';
+import React from 'react';
 
 import Button from 'react-bootstrap/Button';
-import TeamData from '../RaiderData/TeamData';
+import { ButtonGroup } from 'react-bootstrap';
 
-import { useNavigate } from "react-router-dom";
-import { appendValues, setValues } from '../SheetsAPI/SheetsAPI'
+import { setValues } from '../SheetsAPI/SheetsAPI'
 
 import TeamDisplay from './TeamDisplay';
 
 const TeamSettings = (props) => {
-    const navigate = useNavigate();
+    const handleClick = (raider) => props.onFocusRaiderChanged(raider);
 
     let originalTeamMembers = props.teamData.getTeamNamesArray();
+
     return (<>
+    <div>
+    <h4 style={{margin: "12px"}}>Edit the current team</h4>
         <TeamDisplay
             title="Edit team"
             buttonText="Edit team"
@@ -43,6 +45,17 @@ const TeamSettings = (props) => {
                 callback();
             }
             }></TeamDisplay>
+        </div>
+        <div>
+            <h4 style={{margin: "12px"}}>Select focus target</h4>
+            <ButtonGroup>
+                {React.Children.toArray(props.teamData.raiders.map((raider, index) => {
+                    return(<Button onClick={() => handleClick(raider)}>{raider.name}</Button>);
+                }))}
+                
+            </ButtonGroup>
+            <Button onClick={() => handleClick(null)} style={{marginLeft: "12px"}}>Clear focus</Button>
+        </div>
     </>)
 }
 

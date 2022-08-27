@@ -10,6 +10,8 @@ const TeamStats = (props) => {
         return (<></>);
     } else {
         let teamStats = props.teamStats;
+        let focusRaider = props.focusRaider;
+        console.log(focusRaider)
         return (
             <div className='team-stats-content'>
                 <Table className='team-table' striped>
@@ -26,7 +28,7 @@ const TeamStats = (props) => {
                         {React.Children.toArray(props.raiders.map((raider, index) => {
                             let totalNormal = 0;
                             let totalHard = 0;
-                            return <tr>
+                            return <tr style={{backgroundColor: focusRaider == raider ? 'rgba(0, 178, 33, 0.3)' : ''}}>
                                 <td>{raider.name}</td>
                                 {React.Children.toArray(RaidNames.map((raidId, index) => {
                                     let normalCount = teamStats.raiderCounts[raider.name][raidId].normal;
