@@ -15,6 +15,7 @@ import TeamSettings from "./TeamComponents/TeamSettings";
 import { RaidNames } from './RaidConstants'
 
 import { getValues } from './SheetsAPI/SheetsAPI'
+import { GetCookie, SetCookie } from "./Utils/CookieHelper";
 
 class RaidSet {
     constructor(tiers, identifier) {
@@ -67,11 +68,15 @@ const TeamPage = () => {
     const [teamData, setTeamData] = React.useState(new TeamData("", "Loading...", []));
     const [focusRaider, setFocusRaider] = React.useState(null);
 
-    let onFocusRaiderChanged = (raider) => setFocusRaider(raider);
+    let onFocusRaiderChanged = (raider) => {
+        setFocusRaider(raider);
+        SetCookie("focusRaider", raider.name);
+    }
 
     useEffect(() => {
         getValues("Teams", null, true, (results) => {
             let index = results["values"][0].indexOf(teamId);
+            let focusRaiderName = GetCookie("focusRaider");
 
             let alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
             let row = index + 1;
@@ -88,6 +93,10 @@ const TeamPage = () => {
                     if (raidersToShow.includes(raiderDataSplit[0])) {
                         let raider = new Raider(raiderDataSplit[0], raiderDataSplit[1], column + row);
                         raiders.push(raider);
+
+                        if(raider.name == focusRaiderName){
+                            setFocusRaider(raider);
+                        }
                     }
 
                     finalRaiderIndex = raiderIndex;

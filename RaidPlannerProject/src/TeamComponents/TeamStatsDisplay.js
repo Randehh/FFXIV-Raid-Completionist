@@ -11,7 +11,6 @@ const TeamStats = (props) => {
     } else {
         let teamStats = props.teamStats;
         let focusRaider = props.focusRaider;
-        console.log(focusRaider)
         return (
             <div className='team-stats-content'>
                 <Table className='team-table' striped>
