@@ -18,7 +18,7 @@ class Raider {
         let id = raid.acronym;
         this.completionStates[id] = completed;
 
-        setValues("Teams", [this.cell], this.getSerializedCompletionStates(), () => { });
+        setValues("Teams", this.cell, [this.getSerializedCompletionStates()], () => { });
     }
 
     getRaidCompleted(id) {
