@@ -94,7 +94,7 @@ const TeamPage = () => {
                         let raider = new Raider(raiderDataSplit[0], raiderDataSplit[1], column + row);
                         raiders.push(raider);
 
-                        if(raider.name == focusRaiderName){
+                        if (raider.name == focusRaiderName) {
                             setFocusRaider(raider);
                         }
                     }
@@ -142,21 +142,36 @@ const TeamPage = () => {
             <h1 className="team-name">{teamData.teamName}</h1>
             <Accordion defaultActiveKey="0">
                 <Accordion.Item eventKey="0">
-                    <Accordion.Header><h2>Progress overview</h2></Accordion.Header>
+                    <Accordion.Header>
+                        <div className="icon-title">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="32" height="32"><path fill="none" d="M0 0h24v24H0z" /><path d="M12 2a1 1 0 0 1 1 1v3a1 1 0 0 1-2 0V3a1 1 0 0 1 1-1zm0 15a1 1 0 0 1 1 1v3a1 1 0 0 1-2 0v-3a1 1 0 0 1 1-1zm8.66-10a1 1 0 0 1-.366 1.366l-2.598 1.5a1 1 0 1 1-1-1.732l2.598-1.5A1 1 0 0 1 20.66 7zM7.67 14.5a1 1 0 0 1-.366 1.366l-2.598 1.5a1 1 0 1 1-1-1.732l2.598-1.5a1 1 0 0 1 1.366.366zM20.66 17a1 1 0 0 1-1.366.366l-2.598-1.5a1 1 0 0 1 1-1.732l2.598 1.5A1 1 0 0 1 20.66 17zM7.67 9.5a1 1 0 0 1-1.366.366l-2.598-1.5a1 1 0 1 1 1-1.732l2.598 1.5A1 1 0 0 1 7.67 9.5z" fill="rgba(203,203,203,1)" /></svg>
+                            <h2>Progress overview</h2>
+                        </div>
+                    </Accordion.Header>
                     <Accordion.Body>
                         <TeamStatsDisplay raiders={teamData.raiders} teamStats={teamStats} focusRaider={focusRaider}></TeamStatsDisplay>
                     </Accordion.Body>
                 </Accordion.Item>
 
                 <Accordion.Item eventKey="1">
-                    <Accordion.Header><h2>Raid roulette</h2></Accordion.Header>
+                    <Accordion.Header>
+                        <div className="icon-title">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="32" height="32"><path fill="none" d="M0 0h24v24H0z" /><path d="M18 17.883V16l5 3-5 3v-2.09a9 9 0 0 1-6.997-5.365L11 14.54l-.003.006A9 9 0 0 1 2.725 20H2v-2h.725a7 7 0 0 0 6.434-4.243L9.912 12l-.753-1.757A7 7 0 0 0 2.725 6H2V4h.725a9 9 0 0 1 8.272 5.455L11 9.46l.003-.006A9 9 0 0 1 18 4.09V2l5 3-5 3V6.117a7 7 0 0 0-5.159 4.126L12.088 12l.753 1.757A7 7 0 0 0 18 17.883z" fill="rgba(203,203,203,1)" /></svg>
+                            <h2>Raid roulette</h2>
+                        </div>
+                    </Accordion.Header>
                     <Accordion.Body>
                         <RaidRoulette teamStats={teamStats}></RaidRoulette>
                     </Accordion.Body>
                 </Accordion.Item>
 
                 <Accordion.Item eventKey="2">
-                    <Accordion.Header><h2>Progress tracker</h2></Accordion.Header>
+                    <Accordion.Header>
+                        <div className="icon-title">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="32" height="32"><path fill="none" d="M0 0h24v24H0z" /><path d="M11.602 13.76l1.412 1.412 8.466-8.466 1.414 1.414-9.88 9.88-6.364-6.364 1.414-1.414 2.125 2.125 1.413 1.412zm.002-2.828l4.952-4.953 1.41 1.41-4.952 4.953-1.41-1.41zm-2.827 5.655L7.364 18 1 11.636l1.414-1.414 1.413 1.413-.001.001 4.951 4.951z" fill="rgba(203,203,203,1)" /></svg>
+                            <h2>Progress tracker</h2>
+                        </div>
+                    </Accordion.Header>
                     <Accordion.Body>
                         <RaidChecklist tierName={RaidNames[0]} raidSet={arrRaids} raiders={teamData.raiders} focusRaider={focusRaider}></RaidChecklist>
                         <RaidChecklist tierName={RaidNames[1]} raidSet={heavenswardRaids} raiders={teamData.raiders} focusRaider={focusRaider}></RaidChecklist>
@@ -167,7 +182,12 @@ const TeamPage = () => {
                 </Accordion.Item>
 
                 <Accordion.Item eventKey="3">
-                    <Accordion.Header><h2>Settings</h2></Accordion.Header>
+                    <Accordion.Header>
+                        <div className="icon-title">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="32" height="32"><path fill="none" d="M0 0h24v24H0z" /><path d="M3.34 17a10.018 10.018 0 0 1-.978-2.326 3 3 0 0 0 .002-5.347A9.99 9.99 0 0 1 4.865 4.99a3 3 0 0 0 4.631-2.674 9.99 9.99 0 0 1 5.007.002 3 3 0 0 0 4.632 2.672c.579.59 1.093 1.261 1.525 2.01.433.749.757 1.53.978 2.326a3 3 0 0 0-.002 5.347 9.99 9.99 0 0 1-2.501 4.337 3 3 0 0 0-4.631 2.674 9.99 9.99 0 0 1-5.007-.002 3 3 0 0 0-4.632-2.672A10.018 10.018 0 0 1 3.34 17zm5.66.196a4.993 4.993 0 0 1 2.25 2.77c.499.047 1 .048 1.499.001A4.993 4.993 0 0 1 15 17.197a4.993 4.993 0 0 1 3.525-.565c.29-.408.54-.843.748-1.298A4.993 4.993 0 0 1 18 12c0-1.26.47-2.437 1.273-3.334a8.126 8.126 0 0 0-.75-1.298A4.993 4.993 0 0 1 15 6.804a4.993 4.993 0 0 1-2.25-2.77c-.499-.047-1-.048-1.499-.001A4.993 4.993 0 0 1 9 6.803a4.993 4.993 0 0 1-3.525.565 7.99 7.99 0 0 0-.748 1.298A4.993 4.993 0 0 1 6 12c0 1.26-.47 2.437-1.273 3.334a8.126 8.126 0 0 0 .75 1.298A4.993 4.993 0 0 1 9 17.196zM12 15a3 3 0 1 1 0-6 3 3 0 0 1 0 6zm0-2a1 1 0 1 0 0-2 1 1 0 0 0 0 2z" fill="rgba(203,203,203,1)" /></svg>
+                            <h2>Settings</h2>
+                        </div>
+                    </Accordion.Header>
                     <Accordion.Body>
                         <TeamSettings teamData={teamData} onFocusRaiderChanged={onFocusRaiderChanged}></TeamSettings>
                     </Accordion.Body>

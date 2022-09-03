@@ -126,6 +126,14 @@ table tr:last-child > * {
   font-weight: bold;
 }
 
+.icon-title {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  gap: 9px;
+}
+
 @keyframes App-logo-spin {
   from {
     transform: rotate(0deg);
