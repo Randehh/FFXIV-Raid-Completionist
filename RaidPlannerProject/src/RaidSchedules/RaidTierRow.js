@@ -7,7 +7,7 @@ const RaidTierRow = ({ props }) => {
     return (
         <>
             {React.Children.toArray(props.raiders.map((raider, raiderIndex) => {
-                return <tr className='raid-row' style={{ backgroundColor: focusRaider == raider ? 'rgba(0, 178, 33, 0.3)' : '' }}>
+                return <tr className='raid-row' style={{ backgroundColor: focusRaider == raider ? 'rgba(0, 178, 33, 0.2)' : '' }}>
                     {props.tier.printNames === true &&
                         <td className='raid-names-label raider-name'>{raider.name}</td>
                     }

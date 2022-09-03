@@ -1,0 +1,48 @@
+:root {
+  --bg-color-lvl-0: rgb(5, 5, 5);
+  --bg-color-lvl-1: rgb(20, 20, 20);
+  --bg-color-lvl-2: rgb(40, 40, 40);
+  --bg-color-lvl-3: rgb(60, 60, 60);
+  --border-color: rgb(96, 96, 96);
+  --bg-color-highlight: rgb(31, 91, 129);
+  --bg-color-highlight-alternate: rgb(24, 72, 102);
+  --text-color: rgb(230, 230, 230);
+  --text-color-alternate: rgb(210, 210, 210);
+  --text-color-highlight: rgb(55, 164, 231);
+  --table-highlight: rgba(255, 255, 255, 0.05);
+}
+
+body {
+  background-color: var(--bg-color-lvl-1) !important;
+}
+
+body * {
+  --bs-table-striped-color: var(--text-color-alternate)  !important;
+  --bs-btn-bg: var(--bg-color-highlight)  !important;
+  --bs-btn-hover-bg: var(--bg-color-highlight-alternate)  !important;
+  --bs-modal-bg: var(--bg-color-lvl-1) !important;
+
+  color: var(--text-color);
+  border-color: var(--border-color) !important;
+}
+
+input {
+  background-color: var(--bg-color-lvl-3);
+}
+
+textarea {
+  background-color: var(--bg-color-lvl-3);
+}
+
+.accordion {
+  --bs-accordion-btn-bg: var(--bg-color-lvl-2) !important;
+  --bs-accordion-active-bg: var(--bg-color-highlight) !important;
+}
+
+.accordion-item {
+  background-color: var(--bg-color-lvl-1) !important;
+}
+
+.text-highlight {
+  color: var(--text-color-highlight);
+}

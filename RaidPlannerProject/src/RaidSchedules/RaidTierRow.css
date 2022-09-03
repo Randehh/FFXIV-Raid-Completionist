@@ -1,3 +1,5 @@
+@import '../MainTheme.css';
+
 .checkbox-container {
     display: flex;
     justify-content: space-around;
@@ -8,9 +10,9 @@
 }
 
 .raid-row:nth-child(odd) {
-    background: #b8b8b880;
+    background: var(--table-highlight);
 }
 
 .raid-column:nth-child(odd){
-    background: #b8b8b880;
+    background: var(--table-highlight);
 }

@@ -10,7 +10,7 @@ function RaidRoulette(props) {
     return (<>
         {raid != null &&
             <>
-                <h2>{raid.name + " - " + raid.subtitle}</h2>
+                <h2 className='text-highlight'>{raid.name + " - " + raid.subtitle}</h2>
                 <h3>{`from ${raid.parentSet.identifier} in ${raid.parentTier.name}`}</h3>
                 <div><Image src={raid.imageUrl}></Image></div>
             </>

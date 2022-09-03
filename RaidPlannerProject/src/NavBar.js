@@ -24,7 +24,7 @@ const NavBar = () => {
 
                 <div className='nav-bar-search'>
                     <div>Search for team:</div>
-                    <input className='nav-bar-element' type="text" onChange={event => setTeam(event.target.value)}></input>
+                    <input className='nav-bar-element search-bar' type="text" onChange={event => setTeam(event.target.value)}></input>
                     <Link to={"/FFXIV-Raid-Completionist/Team/" + input}>
                         <Button className='nav-bar-button' type="button">Find</Button>
                     </Link>
