@@ -354,14 +354,23 @@ function BuildEndwalkerRaids() {
         new RaidDefinition("P4", "The Fourth Circle", null, "https://img.finalfantasyxiv.com/lds/pc/global/images/itemicon/c3/c35d22c8f131658e59b7e7b691122651ffb04bb6.png?n6.2"),
     ];
 
+    let tier2Raids = [
+        new RaidDefinition("P5", "The Fifth Circle", null, ""),
+        new RaidDefinition("P6", "The Sixth Circle", null, ""),
+        new RaidDefinition("P7", "The Seventh Circle", null, ""),
+        new RaidDefinition("P8", "The Eighth Circle", null, ""),
+    ];
+
     let trials = [
         new RaidDefinition("The Dark Inside", "Zodiark", "DI", "https://img.finalfantasyxiv.com/lds/pc/global/images/itemicon/e2/e2ebc1a3df7648a0074ecb0cb1cf741849c37668.png?n6.2"),
         new RaidDefinition("The Mothercrystal", "Hydaelyn", "MC", "https://img.finalfantasyxiv.com/lds/pc/global/images/itemicon/e2/e2ec2caaf9d38a611feaf41b83140caf33c1a1f9.png?n6.2"),
         new RaidDefinition("The Final Day", "The Endsinger", "FD", "https://img.finalfantasyxiv.com/lds/pc/global/images/itemicon/e2/e2c18103a676f3819656848241b162d89927d90a.png?n6.2"),
+        new RaidDefinition("Storm's Crown", "Barbariccia", "SC", "")
     ]
 
     let tiers = [
         new RaidTier("ASPHODELOS", tier1Raids, "Savage", "S", true),
+        new RaidTier("ABYSSOS", tier2Raids, "Savage", "S", false),
         new RaidTier("TRIALS", trials, "Extreme", " (EX)", false),
     ];
     return new RaidSet(tiers, RaidNames[4]);
