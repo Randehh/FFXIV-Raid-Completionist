@@ -43,7 +43,7 @@ table th:not(:last-child) {
   margin-right: 15px;
 }
 
-table tr:last-child > * {
+table tr:last-child>* {
   border-bottom-width: 0px !important;
 }
 
@@ -53,6 +53,7 @@ table tr:last-child > * {
 
 .raid-checklist {
   border-radius: 3px;
+  position: relative;
 }
 
 .subtitle .raid-difficulty {
@@ -134,10 +135,21 @@ table tr:last-child > * {
   gap: 9px;
 }
 
+.raid-set-background-gradient {
+  position: absolute;
+  mask-image: linear-gradient(to top, rgba(0, 0, 0, 0) 50%, rgba(0, 0, 0, 0.65) 100%);
+  -webkit-mask-image: linear-gradient(to top, rgba(0, 0, 0, 0) 50%, rgba(0, 0, 0, 0.65) 100%);
+  background-size: 100% 100%;
+  width: 100%;
+  height: 100%;
+  box-shadow: 0 0 8px 8px var(--bg-color-lvl-1) inset;
+}
+
 @keyframes App-logo-spin {
   from {
     transform: rotate(0deg);
   }
+
   to {
     transform: rotate(360deg);
   }

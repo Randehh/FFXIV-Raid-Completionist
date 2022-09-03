@@ -18,9 +18,10 @@ import { getValues } from './SheetsAPI/SheetsAPI'
 import { GetCookie, SetCookie } from "./Utils/CookieHelper";
 
 class RaidSet {
-    constructor(tiers, identifier) {
+    constructor(tiers, identifier, image) {
         this.tiers = tiers;
         this.identifier = identifier;
+        this.image = image;
 
         tiers.forEach(tier => {
             tier.raidDefs.forEach(raid => {
@@ -238,7 +239,7 @@ function BuildArrRaids() {
         new RaidTier("TRIALS", trials, "Extreme", " (EX)", false),
     ];
 
-    return new RaidSet(tiers, RaidNames[0]);
+    return new RaidSet(tiers, RaidNames[0], "http://i.imgur.com/KT3A7OD.jpg");
 }
 
 function BuildHeavenswardRaids() {
@@ -279,7 +280,7 @@ function BuildHeavenswardRaids() {
         new RaidTier("THE CREATOR", tier3Raids, "Savage", "S", false),
         new RaidTier("TRIALS", trials, "Extreme", " (EX)", false),
     ];
-    return new RaidSet(tiers, RaidNames[1]);
+    return new RaidSet(tiers, RaidNames[1], "https://i.imgur.com/eJnU3lb.jpg");
 }
 
 function BuildStormbloodRaids() {
@@ -322,7 +323,7 @@ function BuildStormbloodRaids() {
         new RaidTier("TRIALS", trials, "Extreme", " (EX)", false),
     ];
 
-    return new RaidSet(tiers, RaidNames[2]);
+    return new RaidSet(tiers, RaidNames[2], "https://i.imgur.com/wRsoK1b.jpeg");
 }
 
 function BuildShadowbringersRaids() {
@@ -363,7 +364,7 @@ function BuildShadowbringersRaids() {
         new RaidTier("EDEN'S PROMISE", tier3Raids, "Savage", "S", false),
         new RaidTier("TRIALS", trials, "Extreme", " (EX)", false),
     ];
-    return new RaidSet(tiers, RaidNames[3]);
+    return new RaidSet(tiers, RaidNames[3], "https://images.gamespress.com/Content/Artwork/NickNack/Square-Enix/artwork/2018/11/na-1-20181116200055/FFXIV_PUB_FANFESTIVAL_2018_LASVEGAS_16.png?lightbox=y&ex=2022-11-01+03%3A00%3A00&sky=a7e6f6ed6e12092f7dcd3a3eed53b186966c5c4be4326872f4ef8d95ad4f0d40&w=1024&maxheight=4096&mode=pad&format=png");
 }
 
 function BuildEndwalkerRaids() {
@@ -393,7 +394,7 @@ function BuildEndwalkerRaids() {
         new RaidTier("ABYSSOS", tier2Raids, "Savage", "S", false),
         new RaidTier("TRIALS", trials, "Extreme", " (EX)", false),
     ];
-    return new RaidSet(tiers, RaidNames[4]);
+    return new RaidSet(tiers, RaidNames[4], "https://gnomecore.files.wordpress.com/2022/08/ffxiv_25082022_094703_682.png");
 }
 
 export default TeamPage;
