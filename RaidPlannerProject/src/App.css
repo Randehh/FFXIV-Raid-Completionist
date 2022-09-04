@@ -84,12 +84,12 @@ table tr:last-child>* {
   flex-direction: column;
   margin: 6px;
   padding: 12px;
-  background: var(--bg-color-lvl-2);
-  border-radius: 3px;
+  background: var(--bg-color-lvl-2-transparent);
+  border-radius: 9px;
 }
 
 .raid-tier:not(:last-child) {
-  margin-right: 15px;
+  margin-right: 3px;
 }
 
 .raid-title {
