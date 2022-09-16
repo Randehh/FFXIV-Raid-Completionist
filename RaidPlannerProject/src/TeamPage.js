@@ -216,9 +216,9 @@ function BuildArrRaids() {
 
     let tier3Raids = [
         new RaidDefinition("T10", "Turn 1", null, "https://img.finalfantasyxiv.com/lds/pc/global/images/itemicon/7d/7d68cfe62dc895a980d0a08a01ffc65d6e753a77.png?n6.2"),
-        new RaidDefinition("T12", "Turn 2", null, "https://img.finalfantasyxiv.com/lds/pc/global/images/itemicon/15/157f3447db5a214a742665b21840b0ce71051b33.png?n6.2"),
-        new RaidDefinition("T13", "Turn 3", null, "https://img.finalfantasyxiv.com/lds/pc/global/images/itemicon/eb/ebaadb1c87e11526510b661a62064ae0e392900f.png?n6.2"),
-        new RaidDefinition("T14", "Turn 4", null, "https://img.finalfantasyxiv.com/lds/pc/global/images/itemicon/c1/c1e2d8b0995fc79b98cecce0af09775df0220a58.png?n6.2"),
+        new RaidDefinition("T11", "Turn 2", null, "https://img.finalfantasyxiv.com/lds/pc/global/images/itemicon/15/157f3447db5a214a742665b21840b0ce71051b33.png?n6.2"),
+        new RaidDefinition("T12", "Turn 3", null, "https://img.finalfantasyxiv.com/lds/pc/global/images/itemicon/eb/ebaadb1c87e11526510b661a62064ae0e392900f.png?n6.2"),
+        new RaidDefinition("T13", "Turn 4", null, "https://img.finalfantasyxiv.com/lds/pc/global/images/itemicon/c1/c1e2d8b0995fc79b98cecce0af09775df0220a58.png?n6.2"),
     ];
 
     let trials = [
