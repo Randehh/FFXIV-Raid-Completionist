@@ -386,7 +386,8 @@ function BuildEndwalkerRaids() {
         new RaidDefinition("The Dark Inside", "Zodiark", "DI", "https://img.finalfantasyxiv.com/lds/pc/global/images/itemicon/e2/e2ebc1a3df7648a0074ecb0cb1cf741849c37668.png?n6.2"),
         new RaidDefinition("The Mothercrystal", "Hydaelyn", "MC", "https://img.finalfantasyxiv.com/lds/pc/global/images/itemicon/e2/e2ec2caaf9d38a611feaf41b83140caf33c1a1f9.png?n6.2"),
         new RaidDefinition("The Final Day", "The Endsinger", "FD", "https://img.finalfantasyxiv.com/lds/pc/global/images/itemicon/e2/e2c18103a676f3819656848241b162d89927d90a.png?n6.2"),
-        new RaidDefinition("Storm's Crown", "Barbariccia", "SC", "")
+        new RaidDefinition("Storm's Crown", "Barbariccia", "SC", ""),
+        new RaidDefinition("Mount Ordeals", "Rubicante", "MO", "")
     ]
 
     let tiers = [

@@ -5,6 +5,10 @@
   background-color: var(--bg-color-lvl-1);
 }
 
+.App-content {
+  margin:12px;
+}
+
 .App-logo {
   height: 40vmin;
   pointer-events: none;
